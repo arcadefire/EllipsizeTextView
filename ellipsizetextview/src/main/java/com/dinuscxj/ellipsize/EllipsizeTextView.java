@@ -81,6 +81,10 @@ public class EllipsizeTextView extends TextView {
         }
     }
 
+    public CharSequence getOriginText() {
+        return mOriginText;
+    }
+
     private boolean isExceedMaxLine(Layout layout) {
         return layout.getLineCount() > mMaxLines && mMaxLines > 0;
     }
