@@ -97,7 +97,14 @@ public class EllipsizeTextView extends TextView {
         final int width = layout.getWidth() - getPaddingLeft() - getPaddingRight();
         final int maxLineCount = Math.max(1, computeMaxLineCount(layout));
         final int lastLineWidth = (int) layout.getLineWidth(maxLineCount - 1);
-        final int mLastCharacterIndex = layout.getLineEnd(maxLineCount - 1);
+
+        int mLastCharacterIndex = layout.getLineEnd(maxLineCount - 1);
+
+        // Decrease the last character index if the previous char is a new line char, so to avoid for the truncation
+        // text to be mislaid out
+        while (originText.charAt(mLastCharacterIndex - 1) == '\n' && mLastCharacterIndex > 0) {
+            mLastCharacterIndex--;
+        }
 
         final int suffixWidth = (int) (Layout.getDesiredWidth(mEllipsizeText, getPaint()) +
                 Layout.getDesiredWidth(restSuffixText, getPaint())) + 1;
