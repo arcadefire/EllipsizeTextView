@@ -7,7 +7,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.CharacterStyle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ public class EllipsizeTextView extends TextView {
     private int mEllipsizeIndex;
     private int mMaxLines;
 
-    private boolean mIsExactlyMode;
     private boolean mEnableUpdateOriginText = true;
 
     public EllipsizeTextView(Context context) {
@@ -56,7 +54,6 @@ public class EllipsizeTextView extends TextView {
         setText(mOriginText);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         try {
-            mIsExactlyMode = MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY;
             final Layout layout = getLayout();
             if (layout != null) {
                 if (isExceedMaxLine(layout) || isOutOfBounds(layout)) {
@@ -75,10 +72,6 @@ public class EllipsizeTextView extends TextView {
         }
 
         super.setText(text, type);
-
-        if (mIsExactlyMode) {
-            requestLayout();
-        }
     }
 
     public CharSequence getOriginText() {
